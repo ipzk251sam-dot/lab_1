@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits> // Додано для numeric_limits
 #include "services/BankService.h"
 
 void showMenu() {
@@ -17,7 +18,12 @@ int main() {
     
     while (true) {
         showMenu();
-        std::cin >> choice;
+        if (!(std::cin >> choice)) { // ВИПРАВЛЕННЯ: Перевірка вводу
+            std::cout << "Invalid input! Please enter a number.\n";
+            std::cin.clear(); // Скидання помилки
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Очистка буфера
+            continue;
+        }
 
         if (choice == 1) {
             std::string name;
@@ -25,7 +31,11 @@ int main() {
             std::cout << "Enter name: ";
             std::cin >> name;
             std::cout << "Initial deposit: ";
-            std::cin >> amount;
+            while (!(std::cin >> amount)) { // Валідація суми
+                std::cout << "Invalid amount! Try again: ";
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            }
             bank.createAccount(name, amount);
         }
         else if (choice == 2 || choice == 3) {
@@ -48,7 +58,7 @@ int main() {
                     else
                         std::cout << "Insufficient funds!\n";
                 }
-                bank.saveData(); // Auto-save after transaction
+                bank.saveData();
             } else {
                 std::cout << "Account not found!\n";
             }
