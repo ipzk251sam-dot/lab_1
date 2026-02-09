@@ -8,19 +8,17 @@ class Account {
 private:
     int id;
     std::string name;
-    double balance;
+    long double balance; // ������ ��� ��� �������
 
 public:
-    Account(int id, std::string name, double balance);
+    Account(int id, std::string name, long double balance);
     
-    // Геттери (Інкапсуляція: ми лише читаємо дані)
     int getId() const;
     std::string getName() const;
-    double getBalance() const;
+    long double getBalance() const;
 
-    // Методи бізнес-логіки
-    void deposit(double amount);
-    bool withdraw(double amount);
+    void deposit(long double amount);
+    bool withdraw(long double amount);
 };
 
 #endif
