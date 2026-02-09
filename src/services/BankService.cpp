@@ -14,6 +14,7 @@ void BankService::createAccount(std::string name, double initialDeposit) {
     saveData();
 }
 
+// WARNING: Returns raw pointer. Ensure vector is not resized while using this pointer.
 Account* BankService::getAccount(int id) {
     for (auto& acc : accounts) {
         if (acc.getId() == id) {
